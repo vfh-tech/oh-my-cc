@@ -7,7 +7,7 @@ Specialist agent orchestration plugin for Claude Code. Purely declarative: agent
 ## Install
 
 ```bash
-claude plugin marketplace add /path/to/oh-my-cc
+claude plugin marketplace add vfh-tech/oh-my-cc
 claude plugin install oh-my-cc@oh-my-cc
 ```
 
@@ -30,6 +30,8 @@ Your main Claude Code session acts as the **orchestrator**: it plans, delegates 
 | tester | Test authoring, failing-test repair, coverage, edge cases | sonnet |
 | safeguard | Security audit, threat modeling (read-only verdict) | opus |
 | observer | Image/screenshot/PDF/diagram analysis (explicit dispatch only) | haiku |
+| reviewer | Code review of diffs/PRs: severity-rated findings, read-only | sonnet |
+| integrator | PR lifecycle: branch hygiene, gh pr, CI watch, merge, cleanup | sonnet |
 | councillor | Read-only council advisor, one per model seat | inherit |
 
 ### Commands
@@ -48,6 +50,8 @@ Your main Claude Code session acts as the **orchestrator**: it plans, delegates 
 - **worktrees**: isolated git worktree per feature
 - **clonedeps**: read-only dependency clones under `.deps/repos/`
 - **simplify**: behavior-preserving simplification pass
+- **verify**: evidence-before-done gate; done = criteria checked with real output
+- **release**: version bump + changelog + tag + push, preconditions first
 - **multiplexer**: live tmux/zellij panes mirroring background subagents
 
 ### Presets
@@ -76,6 +80,8 @@ If `tmux` or `zellij` is installed, the multiplexer skill mirrors background sub
 | "add the endpoint DELETE /users/:id" | fixer or backend (API → backend) |
 | "write tests for the div() edge cases" | tester |
 | "audit auth flow before release" | safeguard |
+| "review this PR before I merge it" | reviewer |
+| "ship v1.3 with a changelog" | release skill |
 | "read error.png, transcribe the error exactly" | observer |
 
 Or explicit: `@agent-oh-my-cc:explorer find all routes` (typeahead lists all agents after `@agent-oh-my-cc:`).
@@ -106,8 +112,10 @@ orchestrator:
 2. fixer       → execute the refactor
 3. backend     → adjust the session schema/migration if needed
 4. tester      → write/repair tests for the new structure
-5. safeguard   → audit the changed auth code
-6. orchestrator→ run the suite, reconcile, report
+5. reviewer    → review the diff: blockers first
+6. safeguard   → audit the changed auth code
+7. integrator  → branch, gh pr create, watch CI, merge
+8. orchestrator→ verify acceptance criteria with real output, report
 ```
 
 ### Checking what is installed
@@ -127,8 +135,8 @@ oh-my-cc/
 ├── .claude-plugin/
 │   ├── plugin.json        # plugin manifest
 │   └── marketplace.json   # local marketplace wrapper
-├── agents/                # 10 subagent definitions
-├── skills/                # 9 bundled skills
+├── agents/                # 12 subagent definitions
+├── skills/                # 11 bundled skills
 ├── commands/              # /council, /loop, /preset
 ├── presets/               # balanced, openai, budget
 └── README.md
@@ -136,12 +144,13 @@ oh-my-cc/
 
 ## Verify
 
-1. `claude` with the plugin loaded: `/agents` lists the 10 agents
+1. `claude` with the plugin loaded: `/agents` lists the 12 agents
 2. Run each skill once end-to-end in a sample repo
 3. `/oh-my-cc:council` with 3 parallel councillors produces a synthesis with rating
 4. `/oh-my-cc:loop` on a small failing test finishes within 3 iterations
 5. `/oh-my-cc:preset budget` changes the next dispatch's model
-6. No file exceeds 200 lines
+6. Reviewer dispatch on a sample diff returns severity-rated findings
+7. No file exceeds 200 lines
 
 ## Non-goals (v1)
 
