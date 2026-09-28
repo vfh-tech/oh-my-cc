@@ -17,6 +17,26 @@ Requires Claude Code with subagent support.
 
 Your main Claude Code session acts as the **orchestrator**: it plans, delegates to specialists, reconciles results, and verifies. It is not the default implementation worker. Specialists do the work; the orchestrator manages it.
 
+## Quick start
+
+Three ways to use the plugin, from zero config to full control:
+
+1. **Just talk.** Say what you want in plain language. The orchestrator picks the right specialist automatically. No commands, no setup.
+2. **Slash commands** when you want a specific machine: `/oh-my-cc:council` for big decisions, `/oh-my-cc:loop` for iterate-until-green, `/oh-my-cc:preset` for cost control.
+3. **Force a specialist** with `@agent-oh-my-cc:<name>` when you want exactly one agent, e.g. `@agent-oh-my-cc:reviewer review this diff`.
+
+A typical first session:
+
+```
+> find every place we call the Stripe API          ← explorer, automatically
+> add retries with backoff to those call sites     ← fixer, automatically
+> write tests for the retry logic                  ← tester
+> is this safe to ship? /oh-my-cc:council          ← 3 councillors vote
+> /oh-my-cc:loop make all tests pass               ← iterate until green
+```
+
+You never chose an agent in that session. That is the point.
+
 ### Agents (`agents/*.md`)
 
 | Agent | Role | Default model |
@@ -94,9 +114,23 @@ Or explicit: `@agent-oh-my-cc:explorer find all routes` (typeahead lists all age
 /oh-my-cc:preset budget
 ```
 
-- **loop**: dispatches the matching agent per iteration, runs the criterion itself, max 5 attempts, then escalates
-- **council**: 3 independent read-only councillors analyze in parallel; synthesized answer with consensus rating
-- **preset**: loads a model table; every subsequent dispatch uses it
+- **loop**: dispatches the matching agent per iteration, runs the criterion itself, max 5 attempts, then escalates. Use when a task has a hard pass/fail check: tests green, build exits 0, file exists.
+- **council**: 3 independent read-only councillors analyze in parallel; synthesized answer with consensus rating (unanimous | majority | split). Use for architecture choices and "should we do X" decisions. Costs 3 model calls; do not use for trivia.
+- **preset**: loads a model table; every subsequent dispatch uses it. `budget` for cheap lanes, `openai` to route some seats to OpenAI through a gateway.
+
+### When to use what (cheat sheet)
+
+| Situation | Reach for |
+|-----------|-----------|
+| "Where is X implemented?" | explorer (just ask, no command) |
+| Recurring task with a pass/fail check | `/oh-my-cc:loop <task> <criterion>` |
+| Two or more valid designs, you keep flip-flopping | `/oh-my-cc:council <question>` |
+| Token bill too high | `/oh-my-cc:preset budget` |
+| Fresh clone, missing deps | clonedeps skill |
+| Work must not touch your current branch | worktrees skill |
+| About to say "done" | verify skill: criteria + real output first |
+| Ready to merge | integrator agent (PR, CI, merge) |
+| Task done, want to learn from it | reflect skill |
 
 ### Skills (auto-trigger from keywords)
 
