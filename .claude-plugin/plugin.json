@@ -1,0 +1,10 @@
+{
+  "name": "oh-my-cc",
+  "description": "Specialist agent orchestration for Claude Code: six specialists under one orchestrator, multi-model council, loop engineering, presets, and bundled skills. Purely declarative.",
+  "version": "0.1.0",
+  "author": {
+    "name": "vfh-tech"
+  },
+  "skills": "./skills",
+  "commands": "./commands"
+}

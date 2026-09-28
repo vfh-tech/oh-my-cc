@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "oh-my-cc",
+  "description": "Local marketplace for oh-my-cc: specialist agent orchestration for Claude Code",
+  "owner": {
+    "name": "vfh-tech"
+  },
+  "plugins": [
+    {
+      "name": "oh-my-cc",
+      "description": "Specialist agent orchestration: six specialists under one orchestrator, multi-model council, loop engineering, presets, bundled skills. Purely declarative.",
+      "source": "./",
+      "category": "agent-orchestration",
+      "author": {
+        "name": "vfh-tech"
+      }
+    }
+  ]
+}
