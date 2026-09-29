@@ -12,6 +12,12 @@ claude plugin install oh-my-cc@oh-my-cc            # user scope (default): all p
 claude plugin install oh-my-cc@oh-my-cc -s project # project scope: this repo only
 ```
 
+Or install just the skills via [skills.sh](https://skills.sh):
+
+```bash
+npx skills add https://skills.sh/p/AJizdlxWBmPYUqSa
+```
+
 Requires Claude Code with subagent support.
 
 ## How it works
