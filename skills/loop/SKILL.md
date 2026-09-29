@@ -1,6 +1,6 @@
 ---
 name: loop
-description: Auto-iterative execute-and-verify run. Use for /loop or when the user wants work repeated until a success criterion passes: fix failing tests until green, make build pass, iterate on lint errors. Escalates after max attempts.
+description: "Auto-iterative execute-and-verify run. Use for /loop or when the user wants work repeated until a success criterion passes: fix failing tests until green, make build pass, iterate on lint errors. Escalates after max attempts."
 ---
 
 # Loop Engineering

@@ -1,6 +1,6 @@
 ---
 name: verify
-description: Evidence-before-done gate. Use before declaring any implementation, fix, or migration complete: enumerate acceptance criteria, run the real commands, show real output, and only then claim done. Use when the task involves "verify", "check it works", or closing out a plan.
+description: "Evidence-before-done gate. Use before declaring any implementation, fix, or migration complete: enumerate acceptance criteria, run the real commands, show real output, and only then claim done. Use when the task involves \"verify\", \"check it works\", or closing out a plan."
 ---
 
 # Verify

@@ -1,6 +1,6 @@
 ---
 name: release
-description: Cut a release for this repo: version bump, changelog, tag, push. Use when the user says "release", "cut a release", "ship vX.Y", or asks to publish a new version. Asks for nothing; reads state, proposes the plan, executes it.
+description: "Cut a release for this repo: version bump, changelog, tag, push. Use when the user says \"release\", \"cut a release\", \"ship vX.Y\", or asks to publish a new version. Asks for nothing; reads state, proposes the plan, executes it."
 ---
 
 # Release
