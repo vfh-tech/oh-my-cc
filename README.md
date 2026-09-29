@@ -12,7 +12,13 @@ claude plugin install oh-my-cc@oh-my-cc            # user scope (default): all p
 claude plugin install oh-my-cc@oh-my-cc -s project # project scope: this repo only
 ```
 
-Or install just the skills via [skills.sh](https://skills.sh):
+Just the skills? Install from GitHub (no marketplace):
+
+```bash
+npx skills add vfh-tech/oh-my-cc
+```
+
+Or from the [skills.sh](https://skills.sh) pack:
 
 ```bash
 npx skills add https://skills.sh/p/AJizdlxWBmPYUqSa
