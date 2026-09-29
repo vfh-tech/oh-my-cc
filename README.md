@@ -85,7 +85,7 @@ You never chose an agent in that session. That is the point.
 - **simplify**: behavior-preserving simplification pass
 - **verify**: evidence-before-done gate; done = criteria checked with real output
 - **release**: version bump + changelog + tag + push, preconditions first
-- **multiplexer**: live tmux/zellij panes mirroring background subagents
+- **multiplexer**: mirrors background subagents into tmux/zellij panes (approximation, needs tmux/zellij)
 
 ### Presets
 
@@ -94,10 +94,6 @@ You never chose an agent in that session. That is the point.
 - `budget`: haiku + sonnet floor, cost-optimized
 
 Preset switching is dispatch-time override: Claude Code reads each agent's frontmatter `model` at session start, so `/preset` loads a table the orchestrator passes as the `model` argument on every Agent-tool dispatch. Frontmatter models apply when no preset is loaded.
-
-## Multiplexer
-
-If `tmux` or `zellij` is installed, the multiplexer skill mirrors background subagents into named panes running headless `claude -p` with log capture. Without one, plain background tasks. Approximation only, not native TUI embedding.
 
 ## Usage
 
