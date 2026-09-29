@@ -8,7 +8,8 @@ Specialist agent orchestration plugin for Claude Code. Purely declarative: agent
 
 ```bash
 claude plugin marketplace add vfh-tech/oh-my-cc
-claude plugin install oh-my-cc@oh-my-cc
+claude plugin install oh-my-cc@oh-my-cc            # user scope (default): all projects
+claude plugin install oh-my-cc@oh-my-cc -s project # project scope: this repo only
 ```
 
 Requires Claude Code with subagent support.
